@@ -1,0 +1,25 @@
+#:kivy 1.0.9
+Label:
+    text: 'Hello world!'
+#<PydisLogo>:
+    #size: 35,3
+#    Image:
+#        source: 'data/python_discord_logo.png'
+       # pos_hint: {'x': root.center_x, 'y': root.center_y}
+#        size:self.size
+
+<ImageFrame>:
+    img: logo_py
+    PydisLogo:
+        id: logo_py
+        center: self.parent.center
+        source: 'data/python_discord_logo.png'
+        size_hint_x: None
+        size_hint_y: None
+        allow_stretch: True
+        keep_ratio: False
+        #pos_hint: {'x':0.5,'y':0.5}
+        #on_kv_post: self.center=self.parent.center
+        #x:  root.width - self.width
+       # y: root.y
+        #center_y: root.center_y
