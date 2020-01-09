@@ -43,8 +43,6 @@ from pathlib import Path
 class PydisLogo(Scatter):
     # pass
     def on_transform_with_touch(self, touch):
-        print(self)
-        print(self.parent)
         if self.top > self.parent.top:
             self.top = self.parent.top
             print("COLLIDE!!!!!")
@@ -121,12 +119,11 @@ class Root(FloatLayout):
             self.scat.center_y = center[1]
         if self.scat.top > self.top:
             self.scat.top = self.top
-            print("COLLIDE!!!!!")
         if self.scat.y < self.y:
             self.scat.y = self.y
         if self.scat.right > self.right:
             self.scat.right = self.right
-            print("COLLIDE!!!!!")
+#            print("COLLIDE!!!!!")
         if self.scat.x < self.x:
             self.scat.x = self.x
 
