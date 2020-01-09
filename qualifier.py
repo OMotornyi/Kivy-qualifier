@@ -44,8 +44,21 @@ from kivy.uix.scatter import Scatter
 # call, so it can be added to the widget tree, either as root, or to an
 # existing parent widget of your choice. In the example below, "Label"
 # is the "root rule".
-class PydisLogo(Image):
-    pass
+class PydisLogo(Scatter):
+    #pass
+    def on_transform_with_touch(self, touch):
+        print(self)
+        print(self.parent)
+        if self.top > self.parent.top:
+            self.top = self.parent.top
+            print("COLLIDE!!!!!")
+        if self.y < self.parent.y:
+            self.y = self.parent.y
+        if self.right > self.parent.right:
+            self.right = self.parent.right
+            print("COLLIDE!!!!!")
+        if self.x < self.parent.x:
+            self.x = self.parent.x
     #source = StringProperty(None)
     # def __init__(self, **kwargs):
      #    super(PydisLogo, self).__init__(**kwargs)
@@ -72,6 +85,8 @@ class PydisLogo(Image):
 
 class ImageFrame(FloatLayout):
     img = ObjectProperty(None)
+    scat = ObjectProperty(None)
+    pic = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(ImageFrame, self).__init__(**kwargs)
@@ -83,38 +98,43 @@ class ImageFrame(FloatLayout):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        print(self.img.pos_hint)
+        print(self.pic)
         if keycode[1] == 'left':
             print("Moving left")
-            self.img.x -= 10
+            self.scat.x -= 10
         elif keycode[1] == 'right':
-            self.img.x += 10
+            self.scat.x += 10
         elif keycode[1] == 'up':
-            self.img.y += 10
+            self.scat.y += 10
         elif keycode[1] == 'down':
-            self.img.y -= 10
+            self.scat.y -= 10
         elif keycode[1] == 'w':
-            center = (self.img.center_x,self.img.center_y)
+            center = (self.scat.center_x,self.scat.center_y)
             self.img.width *= 1.1
             self.img.height*=1.1
-            self.img.center_x = center[0]
-            self.img.center_y = center[1]
+            self.scat.center_x = center[0]
+            self.scat.center_y = center[1]
         elif keycode[1] == 's':
-            center = (self.img.center_x, self.img.center_y)
+            center = (self.scat.center_x, self.scat.center_y)
             self.img.height*=0.9
             self.img.width *= 0.9
-            self.img.center_x = center[0]
-            self.img.center_y = center[1]
-        if self.img.top > self.top:
-            self.img.top = self.top
+            self.scat.center_x = center[0]
+            self.scat.center_y = center[1]
+        if self.scat.top > self.top:
+            self.scat.top = self.top
             print("COLLIDE!!!!!")
-        if self.img.y < self.y:
-            self.img.y = self.y
-        if self.img.right > self.right:
-            self.img.right = self.right
+        if self.scat.y < self.y:
+            self.scat.y = self.y
+        if self.scat.right > self.right:
+            self.scat.right = self.right
             print("COLLIDE!!!!!")
-        if self.img.x < self.x:
-            self.img.x = self.x
+        if self.scat.x < self.x:
+            self.scat.x = self.x
+    def on_size(self,*args):
+        print("On size fired")
+        #print(args)
+        #print(args[0].size)
+        #print(self.size)
 class ImageMover(App):
     """The application class manages the lifecycle of your program, it
     has events like on_start, on_stop, etc.
