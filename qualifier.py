@@ -6,15 +6,19 @@ tree, here containing only one element, the root, a Label displaying
 """
 
 from kivy.app import App
+from kivy.uix.floatlayout import FloatLayout
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
+
+from kivy.core.window import Window
+from kivy.uix.scatter import Scatter
+from kivy.factory import Factory
+from kivy.uix.popup import Popup
+from pathlib import Path
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
-from kivy.uix.floatlayout import FloatLayout
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
-from kivy.core.window import Window
-from kivy.uix.scatter import Scatter
 
 
 
@@ -45,7 +49,7 @@ from kivy.uix.scatter import Scatter
 # existing parent widget of your choice. In the example below, "Label"
 # is the "root rule".
 class PydisLogo(Scatter):
-    #pass
+    # pass
     def on_transform_with_touch(self, touch):
         print(self)
         print(self.parent)
@@ -59,10 +63,10 @@ class PydisLogo(Scatter):
             print("COLLIDE!!!!!")
         if self.x < self.parent.x:
             self.x = self.parent.x
-    #source = StringProperty(None)
+    # source = StringProperty(None)
     # def __init__(self, **kwargs):
-     #    super(PydisLogo, self).__init__(**kwargs)
-      #   print(self.parent)
+    #    super(PydisLogo, self).__init__(**kwargs)
+    #   print(self.parent)
 
     #     self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
     #     self._keyboard.bind(on_key_down=self._on_keyboard_down)
@@ -83,16 +87,18 @@ class PydisLogo(Scatter):
     #         self.center_y -= 10
 
 
-class ImageFrame(FloatLayout):
+class Root(FloatLayout):
     img = ObjectProperty(None)
     scat = ObjectProperty(None)
     pic = ObjectProperty(None)
+    loadfile = ObjectProperty(None)
+    source = "data/python_discord_logo.png"
 
     def __init__(self, **kwargs):
-        super(ImageFrame, self).__init__(**kwargs)
+        super(Root, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
-
+#        print(self.home)
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
         self._keyboard = None
@@ -109,14 +115,14 @@ class ImageFrame(FloatLayout):
         elif keycode[1] == 'down':
             self.scat.y -= 10
         elif keycode[1] == 'w':
-            center = (self.scat.center_x,self.scat.center_y)
+            center = (self.scat.center_x, self.scat.center_y)
             self.img.width *= 1.1
-            self.img.height*=1.1
+            self.img.height *= 1.1
             self.scat.center_x = center[0]
             self.scat.center_y = center[1]
         elif keycode[1] == 's':
             center = (self.scat.center_x, self.scat.center_y)
-            self.img.height*=0.9
+            self.img.height *= 0.9
             self.img.width *= 0.9
             self.scat.center_x = center[0]
             self.scat.center_y = center[1]
@@ -130,11 +136,32 @@ class ImageFrame(FloatLayout):
             print("COLLIDE!!!!!")
         if self.scat.x < self.x:
             self.scat.x = self.x
-    def on_size(self,*args):
-        print("On size fired")
-        #print(args)
-        #print(args[0].size)
-        #print(self.size)
+
+    def show_load(self):
+        content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
+        self._popup = Popup(title="Load file", content=content,
+                            size_hint=(0.9, 0.9))
+        self._popup.open()
+
+    def dismiss_popup(self):
+            self._popup.dismiss()
+
+    def load(self, path, filename):
+        print(f"Path: '{path}', Filename: '{filename}'")
+        self.source = filename
+        self.img.source = filename[0]
+        self.img.reload()
+        self.dismiss_popup()
+
+
+
+class LoadDialog(FloatLayout):
+    load = ObjectProperty(None)
+    cancel = ObjectProperty(None)
+    home = StringProperty(str(Path.home()))
+
+
+
 class ImageMover(App):
     """The application class manages the lifecycle of your program, it
     has events like on_start, on_stop, etc.
@@ -152,9 +179,9 @@ class ImageMover(App):
         application class, but lower case. here, it would be
         application.kv.
         """
-        game = ImageFrame()
+        game = Root()
         return game
-        #return Builder.load_string(KV_RULES)
+        # return Builder.load_string(KV_RULES)
 
 
 if __name__ == "__main__":

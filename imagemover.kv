@@ -1,16 +1,37 @@
 #:kivy 1.0.9
-#Label:
-#    text: 'Hello world!'
-#<PydisLogo>:
-    #size: 35,3
-#    Image:
-#        source: 'data/python_discord_logo.png'
-       # pos_hint: {'x': root.center_x, 'y': root.center_y}
-#        size:self.size
 
-<ImageFrame>:
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            rootpath: root.home
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+
+<Root>:
     img: pic
     scat: logo_py
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: 'Load'
+                on_release: root.show_load()
     PydisLogo:
         id: logo_py
         size: pic.size
@@ -22,7 +43,10 @@
             id: pic
             #source: root.source
             #center: self.parent.center
-            source: 'data/python_discord_logo.png'
+            source: root.source
+            on_size:
+                print(root.source)
+            #source: 'data/bla.txt'
             size_hint_x: None
             size_hint_y: None
             allow_stretch: True
