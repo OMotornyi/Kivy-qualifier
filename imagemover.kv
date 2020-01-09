@@ -37,15 +37,13 @@
         size: pic.size
         size_hint: None, None
         on_kv_post:
-            print("on_kv_post fired")
+            #print("on_kv_post fired")
             self.center = self.parent.center
         Image:
             id: pic
             #source: root.source
             #center: self.parent.center
-            source: root.source
-            on_size:
-                print(root.source)
+            source: "data/python_discord_logo.png"
             #source: 'data/bla.txt'
             size_hint_x: None
             size_hint_y: None

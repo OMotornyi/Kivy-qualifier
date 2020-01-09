@@ -7,19 +7,11 @@ tree, here containing only one element, the root, a Label displaying
 
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
-
+from kivy.properties import ObjectProperty, StringProperty
 from kivy.core.window import Window
 from kivy.uix.scatter import Scatter
-from kivy.factory import Factory
 from kivy.uix.popup import Popup
 from pathlib import Path
-from kivy.lang import Builder
-from kivy.uix.widget import Widget
-from kivy.uix.image import Image
-from kivy.vector import Vector
-from kivy.clock import Clock
-
 
 
 # KVLang is a yaml-inspired declarative language to describe user
@@ -92,13 +84,14 @@ class Root(FloatLayout):
     scat = ObjectProperty(None)
     pic = ObjectProperty(None)
     loadfile = ObjectProperty(None)
-    source = "data/python_discord_logo.png"
+
+    # source = "data/python_discord_logo.png"
 
     def __init__(self, **kwargs):
         super(Root, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
-#        print(self.home)
+
     def _keyboard_closed(self):
         self._keyboard.unbind(on_key_down=self._on_keyboard_down)
         self._keyboard = None
@@ -144,22 +137,20 @@ class Root(FloatLayout):
         self._popup.open()
 
     def dismiss_popup(self):
-            self._popup.dismiss()
+        self._popup.dismiss()
 
     def load(self, path, filename):
         print(f"Path: '{path}', Filename: '{filename}'")
-        self.source = filename
+        # self.source = filename
         self.img.source = filename[0]
         self.img.reload()
         self.dismiss_popup()
-
 
 
 class LoadDialog(FloatLayout):
     load = ObjectProperty(None)
     cancel = ObjectProperty(None)
     home = StringProperty(str(Path.home()))
-
 
 
 class ImageMover(App):
