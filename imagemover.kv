@@ -20,7 +20,6 @@
                 text: "Load"
                 on_release: root.load(filechooser.path, filechooser.selection)
 
-
 <Root>:
     img: pic
     scat: logo_py
@@ -41,16 +40,8 @@
             self.center = self.parent.center
         Image:
             id: pic
-            #source: root.source
-            #center: self.parent.center
             source: "python_discord_logo.png"
-            #source: 'data/bla.txt'
             size_hint_x: None
             size_hint_y: None
             allow_stretch: True
             keep_ratio: False
-#        #pos_hint: {'x':0.5,'y':0.5}
-        #on_kv_post: self.center=self.parent.center
-        #x:  root.width - self.width
-       # y: root.y
-        #center_y: root.center_y

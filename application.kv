@@ -1,0 +1,74 @@
+#:kivy 1.0.9
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            rootpath: root.home
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<Root>:
+    img: pic
+    scat: logo_py
+    load_button: load_button
+    #zoom_factor: zoom_factor
+#    BoxLayout:
+#        orientation: 'vertical'
+#        top: root.top
+#        height: 30
+#        BoxLayout:
+#            size_hint_y: None
+#            height: 30
+    BoxLayout:
+        size_hint_x : 1
+        size_hint_y : 0.05
+        pos_hint: {'top':1}
+        Button:
+            id:load_button
+            text: 'Load'
+            size_hint_x : 0.8
+            on_release: root.show_load()
+        Button:
+            id:reset_button
+            text: 'Reset'
+            size_hint_x : 0.2
+            on_release: logo_py.reset()
+    PydisLogo:
+        id: logo_py
+        #size: pic.size
+        size_hint: None, None
+#        on_kv_post:
+#            #print("on_kv_post fired")
+#            self.center = self.parent.center
+        Image:
+            id: pic
+            source: "python_discord_logo.png"
+            size: logo_py.size
+            size_hint_x: None
+            size_hint_y: None
+            allow_stretch: True
+            keep_ratio: False
+    Slider:
+        pos_hint:{'x':0.95}
+        size_hint_y:0.95
+        size_hint_x: 0.05
+        orientation: 'vertical'
+        value : root.zoom_factor
+        min: 1.01
+        max: 3
+        on_value:
+            root.zoom_factor = args[1]
+            print(root.zoom_factor)
