@@ -24,14 +24,6 @@
     img: pic
     scat: logo_py
     load_button: load_button
-    #zoom_factor: zoom_factor
-#    BoxLayout:
-#        orientation: 'vertical'
-#        top: root.top
-#        height: 30
-#        BoxLayout:
-#            size_hint_y: None
-#            height: 30
     BoxLayout:
         size_hint_x : 1
         size_hint_y : 0.05
@@ -39,20 +31,16 @@
         Button:
             id:load_button
             text: 'Load'
-            size_hint_x : 0.8
+            size_hint_x : 0.7
             on_release: root.show_load()
         Button:
             id:reset_button
-            text: 'Reset'
-            size_hint_x : 0.2
+            text: 'Reset size/angle'
+            size_hint_x : 0.3
             on_release: logo_py.reset()
     PydisLogo:
         id: logo_py
-        #size: pic.size
         size_hint: None, None
-#        on_kv_post:
-#            #print("on_kv_post fired")
-#            self.center = self.parent.center
         Image:
             id: pic
             source: "python_discord_logo.png"

@@ -34,14 +34,6 @@ from pathlib import Path
 # existing parent widget of your choice. In the example below, "Label"
 # is the "root rule".
 
-def _zoom(scat,img,factor):
-    scat.scale*=factor
-    # center = (scat.center_x, scat.center_y)
-    # img.height *= factor
-    # img.width *= factor
-    # scat.center_x = center[0]
-    # scat.center_y = center[1]
-
 def _position_within_window(scat,frame):
     if scat.top > frame.top:
         scat.top = frame.top
@@ -58,10 +50,13 @@ def _position_within_window(scat,frame):
 class PydisLogo(Scatter):
     def on_transform_with_touch(self, touch):
         _position_within_window(self, self.parent)
+
     def reset(self):
         print("RESET")
         print(self.rotation)
         print(self.scale)
+        self.rotation = 0
+        self.scale = 1
 
 
 class Root(FloatLayout):
@@ -91,11 +86,9 @@ class Root(FloatLayout):
         elif keycode[1] == 'down':
             self.scat.y -= 10
         elif keycode[1] == 'w':
-            #_zoom(self.scat,self.img, self.zoom_factor)
-            _zoom(self.scat, self.scat, self.zoom_factor)
+            self.scat.scale*=self.zoom_factor
         elif keycode[1] == 's':
-            #_zoom(self.scat,self.img, 1/self.zoom_factor)
-            _zoom(self.scat, self.scat, 1/self.zoom_factor)
+            self.scat.scale /= self.zoom_factor
         _position_within_window(self.scat, self)
 
     def show_load(self):
