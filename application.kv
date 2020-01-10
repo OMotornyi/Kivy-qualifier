@@ -24,14 +24,20 @@
     img: pic
     scat: logo_py
     load_button: load_button
+    zoom_slider: zoom_slider
     BoxLayout:
         size_hint_x : 1
         size_hint_y : 0.05
         pos_hint: {'top':1}
         Button:
+            id:slider_button
+            text: 'Zoom slider'
+            size_hint_x : 0.3
+            on_release: root.toggle_slider()
+        Button:
             id:load_button
             text: 'Load'
-            size_hint_x : 0.7
+            size_hint_x : 0.4
             on_release: root.show_load()
         Button:
             id:reset_button
@@ -50,6 +56,7 @@
             allow_stretch: True
             keep_ratio: False
     Slider:
+        id: zoom_slider
         pos_hint:{'x':0.95}
         size_hint_y:0.95
         size_hint_x: 0.05

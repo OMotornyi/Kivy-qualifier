@@ -52,9 +52,6 @@ class PydisLogo(Scatter):
         _position_within_window(self, self.parent)
 
     def reset(self):
-        print("RESET")
-        print(self.rotation)
-        print(self.scale)
         self.rotation = 0
         self.scale = 1
 
@@ -63,6 +60,7 @@ class Root(FloatLayout):
     img = ObjectProperty(None)
     scat = ObjectProperty(None)
     pic = ObjectProperty(None)
+    zoom_slider = ObjectProperty(None)
     loadfile = ObjectProperty(None)
     load_button = ObjectProperty(None)
     zoom_factor = NumericProperty(1.1)
@@ -90,6 +88,12 @@ class Root(FloatLayout):
         elif keycode[1] == 's':
             self.scat.scale /= self.zoom_factor
         _position_within_window(self.scat, self)
+
+    def toggle_slider(self):
+        if self.zoom_slider in self.children:
+            self.remove_widget(self.zoom_slider)
+        else:
+            self.add_widget(self.zoom_slider)
 
     def show_load(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
